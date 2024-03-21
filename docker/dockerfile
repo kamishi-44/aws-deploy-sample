@@ -1,0 +1,19 @@
+# ベースイメージの指定
+# nginxをベースにしJavaをインストールする
+FROM nginx:latest
+
+# ラベルの設定
+LABEL maintainer="kamishi"
+LABEL version="1.0"
+
+# パッケージのインストール
+# nginx のイメージはalpineをベースにしているため、インストール系はaptコマンドを使用する
+# apt以外にapt-getコマンドもあるが、aptがその後継として開発されたコマンドなのでaptを使用する
+RUN apt update && apt install -y openjdk-17-jdk
+
+# 外部に公開するポートの指定
+EXPOSE 5000
+
+# イメージからコンテナを起動するときに実行するコマンドを指定
+# CMD は Dockerfile 内に1つだけ指定できる
+CMD ["java", "-version"]
